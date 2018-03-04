@@ -92,7 +92,7 @@
       var header_height = parseInt($('header').css('height'));
       var hash = $(this.hash);
       // console.log(hash.offset().top, header_height);
-
+      e.preventDefault();
       $('body,html').animate({
         scrollTop: hash.offset().top - header_height
       }, 500);
