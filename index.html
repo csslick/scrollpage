@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Scroll page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+    *{
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+    }
+    body{ margin-top: 70px;}
+    ul{ list-style-type: none;}
+    .container{
+      width: 100%;
+      padding: 20px;
+      /* border: 1px solid #ccc; */
+    }
+    header{
+      position: fixed;
+      top: 0;
+      left: 0; right: 0;
+      height: 70px;
+      background: #333; color: #fff;
+    }
+    header h1{
+      float: left;
+    }
+    header #gnb{
+      float: left;
+      margin-top: 15px;
+      margin-left: 15px;
+    }
+    header #gnb li{
+      float: left;
+    }
+    header #gnb li > a{
+      color: #ccc;
+      display: block;
+      padding: 0 10px;
+      text-decoration: none;
+    }
+    header #gnb li > a.on{
+      color: #fff;
+    }
+    #top{
+      background: linear-gradient(90deg, pink, #f80);
+      height: 300px;
+    }
+    #portfolio, #contact{
+      height: 100vh;
+    }
+    #portfolio{ background: #ff0;}
+    #contact{ background: #000; color: #fff;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Scroll Section</h1>
+      <ul id="gnb">
+        <li><a href="#top">Home</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="container">
+      <h1>Scroll page test</h1>
+    </div>
+  </section>
+  <section id="portfolio">
+    <div class="container">
+      <h2>Portfolio</h2>
+    </div>
+  </section>
+
+  <section id="contact">
+      <div class="container">
+      <h2>Conact</h2>
+    </div>
+  </section>
+
+  <script>
+
+    $('#gnb a').click(function(e){
+      // 고정 헤더 높이값(고정 포지션 떄문에 스크롤 위치 보정)
+      var header_height = parseInt($('header').css('height'));
+      var hash = $(this.hash);
+      // console.log(hash.offset().top, header_height);
+
+      $('body,html').animate({
+        scrollTop: hash.offset().top - header_height
+      }, 500);
+    });
+
+    $(window).scroll(function(){
+      var header_height = parseInt($('header').css('height'));
+      var scrollbar_location = $(this).scrollTop();
+      var lo = [];  // 섹션 배열
+      //섹션 위치
+      lo[0] = $('#top').offset().top - header_height,
+      lo[1] = $('#portfolio').offset().top - header_height,
+      lo[2] = $('#contact').offset().top - header_height;
+      console.log(lo[0], lo[1], lo[2]);
+
+      // 이동시 메뉴 하이라이트
+      for(var i = 0; i < 3; i++){
+        if(scrollbar_location >= lo[i]){
+          $('#gnb a').removeClass('on');
+          $('#gnb a').eq(i).addClass('on');
+        }
+      }
+    });
+
+
+
+  </script>
+</body>
+</html>
